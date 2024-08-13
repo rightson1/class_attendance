@@ -1,0 +1,60 @@
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid;
+  border-color: #00a74d transparent;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.grid-1-2-3 {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+.grid-1-2 {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+.h1 {
+  @apply text-[36px] md:text-[48px] font-bold;
+}
+.h2 {
+  @apply text-[24px] md:text-[36px] font-bold;
+}
+.h3 {
+  @apply text-[18px] md:text-[24px] font-bold;
+}
+.h4 {
+  @apply text-[16px] md:text-[18px] font-bold;
+}
+.h5 {
+  @apply text-[14px] md:text-[16px] font-semibold;
+}
+.h6 {
+  @apply text-[12px] md:text-[14px] font-semibold;
+}
+
+.b-card {
+  @apply border border-border rounded-lg;
+}
