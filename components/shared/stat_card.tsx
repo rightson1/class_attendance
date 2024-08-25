@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { IconType } from "react-icons/lib";
 
 export const Stat_Card = (props: {
-  title: string;
+  title: string | number;
   description: string;
   icon:
     | React.ForwardRefExoticComponent<

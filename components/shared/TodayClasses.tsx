@@ -5,20 +5,24 @@ import { dummyClasses, dummyUnits, IDummyClass, IDummyUnit } from "@/lib/data";
 import { Table_Wrapper } from "@/components/shared/table_wrapper";
 import { useRouter } from "next/navigation";
 import { format } from "timeago.js";
-const ClassesTable = () => {
+import { IClassWithLUs } from "@/lib/data_types";
+
+const ClassesTable = ({ classes }: { classes: IClassWithLUs[] }) => {
   const router = useRouter();
-  const columns: ColumnDef<IDummyClass>[] = [
+  const columns: ColumnDef<IClassWithLUs>[] = [
     {
       accessorKey: "name",
       header: "Title",
     },
     {
-      accessorKey: "code",
-      header: "Code",
-    },
-    {
       accessorKey: "lecturer",
       header: "Lecture",
+      accessorFn: (row) => row.lecturer.name,
+    },
+    {
+      accessorKey: "unit",
+      header: "Lecturer",
+      accessorFn: (row) => row.unit.name,
     },
     {
       accessorKey: "Students",
@@ -26,14 +30,12 @@ const ClassesTable = () => {
       accessorFn: (data) => data.students.length,
     },
     {
-      accessorKey: "startTime",
+      accessorKey: "start_time",
       header: "Start Time",
-      accessorFn: ({ startTime }) => format(startTime),
     },
     {
-      accessorKey: "endTime",
+      accessorKey: "end_time",
       header: "endTime",
-      accessorFn: ({ endTime }) => format(endTime),
     },
   ];
 
@@ -42,9 +44,9 @@ const ClassesTable = () => {
       <Table_Wrapper
         columns={columns}
         onRowClick={(row) => {
-          router.push(`/units/${row._id}`);
+          router.push(`/admin/units/${row._id}`);
         }}
-        data={dummyClasses}
+        data={classes}
         loading={false}
         title="Today's Classes"
         searchField="name"

@@ -6,7 +6,7 @@ import { QrStyleProvider } from "@/components/provider/qr_provider";
 import QRCode from "@/components/qrcode/qrCode";
 import { Params } from "@/lib/ui_types";
 import { useGetClassById } from "@/lib/hooks/useClass";
-import { LoadingUI } from "@/components/main/loadingUI";
+import { LoadingUI, PageLoading } from "@/components/main/loadingUI";
 import NotFoundUI from "@/components/main/NotFoundUI";
 
 const QRCODE = ({ params: { class: classId } }: Params<"class">) => {
@@ -16,12 +16,12 @@ const QRCODE = ({ params: { class: classId } }: Params<"class">) => {
       <div>
         <div className="w-full">
           <QrStyleProvider>
-            <QrCodeWrapper initialValue={data._id} />
+            <QrCodeWrapper initialValue={`The Class ID is: ${classId}`} />
           </QrStyleProvider>
         </div>
       </div>
     );
-  if (!isPending) return <LoadingUI />;
+  if (isPending) return <PageLoading />;
   else {
     return <NotFoundUI message="Class not found" title="Class not found" />;
   }

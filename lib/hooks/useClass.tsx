@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import z from "zod";
 import { classSchema } from "../zod";
-import { IClassWithUnit, IUser } from "../data_types";
+import { IClassStudentUpdate, IClassWithUnit, IUser } from "../data_types";
 import { toast } from "sonner";
 export const useCreateClass = () => {
   return useMutation({
@@ -63,6 +63,22 @@ export const useGetStudentsInClass = (_id: string) => {
       return axios
         .get(`/api/classes/students?_id=${_id}`)
         .then((res) => res.data);
+    },
+  });
+};
+
+//update student in class
+export const useUpdateStudentInClass = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (values: IClassStudentUpdate) => {
+      console.log(values);
+      return axios.put(`/api/classes/students`, values);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["students"],
+      });
     },
   });
 };

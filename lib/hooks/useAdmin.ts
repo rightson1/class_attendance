@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { IAdminValues } from "../data_types";
+import { AdminDashboardData, IAdminValues } from "../data_types";
 import axios from "axios";
 
 export const useCreateAdmin = () => {
@@ -18,5 +18,14 @@ export const useGetByUid = ({ uid }: { uid?: string }) => {
       return axios.get(`/api/admin?uid=${uid}`);
     },
     enabled: !!uid,
+  });
+};
+
+export const useGetAdminDashboard = () => {
+  return useQuery<AdminDashboardData>({
+    queryKey: ["Get_Admin_Dashboard"],
+    queryFn: async () => {
+      return axios.get(`/api/dashboard/admin`).then((res) => res.data);
+    },
   });
 };

@@ -47,6 +47,9 @@ export const GET = async (req: NextRequest) => {
             as: "unit",
           },
         },
+        {
+          $unwind: "$unit",
+        },
       ]);
       return NextResponse.json(classes);
     }

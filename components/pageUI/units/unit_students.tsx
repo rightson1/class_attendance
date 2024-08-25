@@ -36,26 +36,10 @@ const StudentInUnit = ({
     {
       id: "actions",
       header: "Actions",
+
       cell: ({ row }) => {
         return !addStudent ? (
-          <div className="flex gap-2">
-            <Button
-              size={"icon"}
-              variant={"ghost"}
-              onClick={() => {
-                customToast({
-                  func: async () =>
-                    await updateStudent({
-                      student_id: row.original._id,
-                      unit_id: unit._id,
-                      updateType: "remove",
-                    }),
-                });
-              }}
-            >
-              <Trash size={18} />
-            </Button>
-          </div>
+          <div className="flex gap-2"></div>
         ) : (
           <div className="flex gap-2">
             <Button

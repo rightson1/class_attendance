@@ -11,14 +11,14 @@ export const POST = async (req: NextResponse) => {
     const newAdmin = await Admin.create(body);
     return NextResponse.json(newAdmin);
   } catch (e: any) {
-    try {
-      (await auth_admin()).deleteUser(body.uid);
-    } catch (deleteError: any) {
-      console.error(deleteError.message);
-      return new Response(JSON.stringify({ message: deleteError.message }), {
-        status: 400,
-      });
-    }
+    // try {
+    //   (await auth_admin()).deleteUser(body.uid);r
+    // } catch (deleteError: any) {
+    //   console.error(deleteError.message);
+    //   return new Response(JSON.stringify({ message: deleteError.message }), {
+    //     status: 400,
+    //   });
+    // }
     return new Response(JSON.stringify({ message: e.message }), {
       //what the best status code to use here?
       status: 400,
@@ -29,7 +29,6 @@ export const POST = async (req: NextResponse) => {
 //get admin by uid
 export const GET = async (req: NextRequest) => {
   const uid = req.nextUrl.searchParams.get("uid");
-  console.log;
   try {
     await conn();
     const admin = await Admin.findOne({ uid });

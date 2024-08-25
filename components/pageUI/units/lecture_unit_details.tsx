@@ -16,6 +16,10 @@ const LectureUnitDetails = ({ unit }: { unit: IUnit }) => {
         <CustomTabs
           tabs={[
             {
+              title: "Classes",
+              content: <LectureClassesTable />,
+            },
+            {
               title: "Student",
               content: (
                 <StudentInUnit
@@ -24,10 +28,6 @@ const LectureUnitDetails = ({ unit }: { unit: IUnit }) => {
                   students={units}
                 />
               ),
-            },
-            {
-              title: "Classes",
-              content: <LectureClassesTable />,
             },
           ]}
         />

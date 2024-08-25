@@ -39,7 +39,11 @@ export default function RootLayout({
         font-inter w-screen overflow-x-hidden `}
       >
         {" "}
-        <NextTopLoader color="#000000" shadow="0 0 10px #000,0 0 5px #000" />
+        <NextTopLoader
+          color="#000000"
+          shadow="0 0 10px #000,0 0 5px #000"
+          showSpinner={false}
+        />
         <Client>{children}</Client>
       </body>
     </html>

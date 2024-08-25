@@ -56,3 +56,35 @@ export interface IClassWithUnit extends Omit<IClassValues, "unit">, IFetched {
   students: [];
   unit: IUnit;
 }
+export interface IClassWithLUs
+  extends IFetched,
+    Omit<IClassValues, "unit" | "lecturer"> {
+  students: string[];
+  lecturer: IUser;
+  unit: IUnit;
+}
+export interface IClassStudentUpdate {
+  updateType: "remove" | "add";
+  class_id: string;
+  student_id: string;
+}
+export interface AdminDashboardData {
+  lecturers: number;
+  students: number;
+  totalClasses: number;
+  upcomingClasses: number;
+  ongoingClasses: number;
+  completedClassesToday: number;
+  totalUnits: number;
+  classesToday: IClassWithLUs[];
+}
+export interface LecturerDashboardData {
+  lectureClassesToday: number; // Number of lecture's classes today
+  ongoingClasses: number; // Number of ongoing classes for the lecturer
+  completedClassesToday: number; // Number of completed classes for today
+  lectureUnitsCount: number; // Number of units the lecturer teaches
+  studentsCount: number; // Number of students in all the units the lecturer teaches
+  upcomingClassesToday: number; // Number of upcoming classes for today
+  canceledClasses: number; // Number of canceled classes for the lecturer
+  todaysClasses: IClassWithUnit[]; // Today's classes for the lecturer
+}

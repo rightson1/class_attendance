@@ -1,5 +1,6 @@
 "use client";
 import { NewClass } from "@/components/modals/new_class";
+import LectureAllClasses from "@/components/pageUI/classes/lecture_all_classes";
 import { useAuth } from "@/components/provider/UserAuth";
 import { PageTitle } from "@/components/shared/atoms";
 import { useGetClassesByLecturer } from "@/lib/hooks/useClass";
@@ -13,7 +14,7 @@ const Classes = () => {
         <PageTitle link="/classes" title="Classes" />
         <NewClass />
       </div>
-      {/* <StudentInClasses */}
+      <LectureAllClasses classes={classes || []} isPending={isPending} />
     </div>
   );
 };

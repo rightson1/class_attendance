@@ -10,13 +10,11 @@ import { useCustomToast } from "@/components/atoms/functions";
 import { useDeleteLectureFromUnit } from "@/lib/hooks/useUnit";
 
 const LectureTable = ({
-  unit,
   lectures,
   isPending,
 }: {
   lectures: IUser[];
   isPending: boolean;
-  unit: IUnit;
 }) => {
   const { mutateAsync: deleteUser } = useDeleteLectureFromUnit();
   const { customToast, loading } = useCustomToast();
@@ -44,7 +42,7 @@ const LectureTable = ({
               onClick={() => {
                 customToast({
                   func: async () => {
-                    await deleteUser(unit._id);
+                    await deleteUser(row.original._id);
                   },
                 });
               }}

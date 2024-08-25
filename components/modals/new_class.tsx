@@ -139,7 +139,9 @@ export const NewClass = () => {
                       </SelectTrigger>
                       <SelectContent>
                         {units?.map((unit) => (
-                          <SelectItem value={unit._id}>{unit.name}</SelectItem>
+                          <SelectItem value={unit._id} key={unit._id}>
+                            {unit.name}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
