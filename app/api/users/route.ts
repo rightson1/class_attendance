@@ -4,7 +4,7 @@ import { IuserValues } from "@/lib/data_types";
 import { auth_admin } from "@/lib/firebase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: NextResponse) => {
+export const POST = async (req: NextRequest) => {
   const body: IuserValues = await req.json();
   try {
     await conn();

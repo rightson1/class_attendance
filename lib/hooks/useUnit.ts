@@ -14,7 +14,7 @@ export const useCreateUnit = () => {
 
 //get all units
 export const useGetUnits = () => {
-  return useQuery<IUnit[]>({
+  return useQuery<IUnitWithSL[]>({
     queryKey: ["units"],
     queryFn: async () => {
       return axios.get("/api/units").then((res) => res.data);

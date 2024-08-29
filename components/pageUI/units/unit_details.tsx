@@ -39,7 +39,7 @@ const UnitDetails = ({ unit }: { unit: IUnit }) => {
                 <LectureTable
                   isPending={false}
                   lectures={lectures || []}
-                  unit={unit}
+                  // unit={unit}
                 />
               ),
             },

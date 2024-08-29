@@ -41,7 +41,10 @@ export interface IUnit extends IFetched, IUnitValues {
   students: string[] | IUser[];
   lecturer: IUser | string;
 }
-
+export interface IUnitWithLecture extends IFetched, IUnit {
+  lecturer: IUser;
+  students: [];
+}
 export interface IUnitWithSL extends IUnit {
   lecturer: IUser;
   students: IUser[];
@@ -52,6 +55,7 @@ export interface IUnitStudentUpdate {
   unit_id: string;
   student_id: string;
 }
+export interface IClass extends IFetched, IClassValues {}
 export interface IClassWithUnit extends Omit<IClassValues, "unit">, IFetched {
   students: [];
   unit: IUnit;
@@ -63,6 +67,14 @@ export interface IClassWithLUs
   lecturer: IUser;
   unit: IUnit;
 }
+export interface IClassWithStudents
+  extends IFetched,
+    Omit<IClassValues, "unit" | "lecturer"> {
+  students: IUser[];
+  lecturer: string;
+  unit: string;
+}
+
 export interface IClassStudentUpdate {
   updateType: "remove" | "add";
   class_id: string;
@@ -87,4 +99,14 @@ export interface LecturerDashboardData {
   upcomingClassesToday: number; // Number of upcoming classes for today
   canceledClasses: number; // Number of canceled classes for the lecturer
   todaysClasses: IClassWithUnit[]; // Today's classes for the lecturer
+}
+
+export interface StudentDashboardData {
+  studentClassesToday: number;
+  ongoingClasses: number;
+  completedClassesToday: number;
+  studentUnitsCount: number;
+  upcomingClassesToday: number;
+  canceledClasses: number;
+  todaysClasses: IClassWithLUs[];
 }

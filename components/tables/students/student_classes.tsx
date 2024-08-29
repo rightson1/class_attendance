@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { format } from "timeago.js";
 import { IClassWithLUs } from "@/lib/data_types";
 
-const ClassesTable = ({ classes }: { classes: IClassWithLUs[] }) => {
+export const Student_Classes = ({ classes }: { classes: IClassWithLUs[] }) => {
   const router = useRouter();
   const columns: ColumnDef<IClassWithLUs>[] = [
     {
@@ -17,17 +17,17 @@ const ClassesTable = ({ classes }: { classes: IClassWithLUs[] }) => {
     {
       accessorKey: "lecturer",
       header: "Lecture",
-      accessorFn: (row) => row.lecturer.name,
+      accessorFn: (row) => row.lecturer?.name,
     },
     {
       accessorKey: "unit",
       header: "Unit",
-      accessorFn: (row) => row.unit.name,
+      accessorFn: (row) => row.unit?.name,
     },
     {
       accessorKey: "Students",
       header: "Students",
-      accessorFn: (data) => data.students.length,
+      accessorFn: (data) => data.students?.length,
     },
     {
       accessorKey: "start_time",
@@ -51,5 +51,3 @@ const ClassesTable = ({ classes }: { classes: IClassWithLUs[] }) => {
     </div>
   );
 };
-
-export default ClassesTable;

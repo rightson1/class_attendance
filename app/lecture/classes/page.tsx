@@ -7,11 +7,13 @@ import { useGetClassesByLecturer } from "@/lib/hooks/useClass";
 import React from "react";
 const Classes = () => {
   const { user } = useAuth();
-  const { isPending, data: classes } = useGetClassesByLecturer(user?._id);
+  const { isPending, data: classes } = useGetClassesByLecturer({
+    lecturer: user?._id!,
+  });
   return (
     <div className="space-y-5">
       <div className="fb ">
-        <PageTitle link="/classes" title="Classes" />
+        <PageTitle link="/lecture/classes" title="Classes" />
         <NewClass />
       </div>
       <LectureAllClasses classes={classes || []} isPending={isPending} />

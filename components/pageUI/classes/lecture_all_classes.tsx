@@ -1,16 +1,15 @@
 "use client";
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { dummyClasses, dummyUnits, IDummyClass, IDummyUnit } from "@/lib/data";
 import { Table_Wrapper } from "@/components/shared/table_wrapper";
 import { useRouter } from "next/navigation";
-import { format } from "timeago.js";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
-import { useAuth } from "@/components/provider/UserAuth";
-import { useDeleteClass, useGetClassesByLecturer } from "@/lib/hooks/useClass";
+import { useDeleteClass } from "@/lib/hooks/useClass";
 import { IClassWithUnit } from "@/lib/data_types";
 import { useCustomToast } from "@/components/atoms/functions";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 const LectureAllClasses = ({
   classes,
   isPending,
@@ -43,6 +42,25 @@ const LectureAllClasses = ({
       header: "Date",
       accessorFn: (data) => new Date(data.class_date).toDateString(),
       size: 150,
+    },
+    {
+      //
+      accessorKey: "status",
+      header: "Status",
+
+      cell: ({ row }) => {
+        const status = row.original.status;
+        return (
+          <Badge
+            className={cn(
+              `capitalize`,
+              status === "cancelled" && `bg-red-500 text-white`
+            )}
+          >
+            {row.original.status}
+          </Badge>
+        );
+      },
     },
     {
       accessorKey: "start_time",

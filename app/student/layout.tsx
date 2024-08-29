@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     if (!userIdentity) {
       router.push("/auth/login");
     }
-    if (userIdentity && user && user.role !== "lecture") {
+    if (userIdentity && user && user.role !== "student") {
       router.push("/auth/login");
     }
   }, [userIdentity, user]);
@@ -40,7 +40,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             className="hidden md:flex
              md:w-[250px] md:fixed h-full z-[5] p-2 rounded-md"
           >
-            <Sidebar user_type="lecture" />
+            <Sidebar user_type="student" />
           </div>
           <div className="w-full md:pl-[250px] relative ">
             <div className="z-[2] rpx py-4 md:py-6 ">{children}</div>

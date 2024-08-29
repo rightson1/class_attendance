@@ -4,7 +4,7 @@ import { IUnit, IUnitValues } from "@/lib/data_types";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
-export const POST = async (req: NextResponse) => {
+export const POST = async (req: NextRequest) => {
   try {
     await conn();
     const body: IUnitValues = await req.json();

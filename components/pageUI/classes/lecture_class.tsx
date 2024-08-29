@@ -11,9 +11,14 @@ import { useAuth } from "@/components/provider/UserAuth";
 import { useDeleteClass, useGetClassesByLecturer } from "@/lib/hooks/useClass";
 import { IClassWithUnit } from "@/lib/data_types";
 import { useCustomToast } from "@/components/atoms/functions";
-const LectureClassesTable = () => {
+import Edit_Class from "../../modals/edit_class";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+const LectureClassesTable = ({ unit }: { unit: string }) => {
   const { user } = useAuth();
-  const { data, isPending } = useGetClassesByLecturer(user?._id);
+  const { data, isPending } = useGetClassesByLecturer({
+    unit,
+  });
   const router = useRouter();
   const { customToast, loading } = useCustomToast();
   const { mutateAsync: deleteClass } = useDeleteClass();
@@ -28,12 +33,32 @@ const LectureClassesTable = () => {
       header: "Students",
       accessorFn: (data) => data.students.length,
     },
+
     {
       //date
       accessorKey: "class_date",
       header: "Date",
       accessorFn: (data) => new Date(data.class_date).toDateString(),
       size: 150,
+    },
+    {
+      //
+      accessorKey: "status",
+      header: "Status",
+
+      cell: ({ row }) => {
+        const status = row.original.status;
+        return (
+          <Badge
+            className={cn(
+              `capitalize`,
+              status === "cancelled" && `bg-red-500 text-white`
+            )}
+          >
+            {row.original.status}
+          </Badge>
+        );
+      },
     },
     {
       accessorKey: "start_time",
@@ -48,7 +73,12 @@ const LectureClassesTable = () => {
       header: "Actions",
       cell: ({ row }) => {
         return (
-          <div className="flex gap-2">
+          <div
+            className="flex gap-2 items-center"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <Button
               size={"icon"}
               variant={"ghost"}
@@ -63,6 +93,7 @@ const LectureClassesTable = () => {
             >
               <Trash size={18} />
             </Button>
+            <Edit_Class current_class={row.original} />
           </div>
         );
       },

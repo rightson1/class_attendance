@@ -73,7 +73,7 @@ export const NewClass = () => {
     });
   };
   return (
-    <Dialog>
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>
         <Button>
           <Plus />

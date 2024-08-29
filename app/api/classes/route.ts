@@ -34,11 +34,27 @@ export const GET = async (req: NextRequest) => {
     await conn();
     const lecturer = req.nextUrl.searchParams.get("lecturer");
     const _id = req.nextUrl.searchParams.get("_id");
-    if (lecturer) {
+    const unit = req.nextUrl.searchParams.get("unit");
+    console.log({
+      lecturer,
+      _id,
+      unit,
+    });
+    const unitLecQuery = lecturer
+      ? {
+          $match: {
+            lecturer: new Types.ObjectId(lecturer!),
+          },
+        }
+      : {
+          $match: {
+            unit: new Types.ObjectId(unit!),
+          },
+        };
+
+    if (lecturer || unit) {
       const classes = await Class.aggregate([
-        {
-          $match: { lecturer: new Types.ObjectId(lecturer) },
-        },
+        unitLecQuery,
         {
           $lookup: {
             from: "units",
@@ -53,6 +69,7 @@ export const GET = async (req: NextRequest) => {
       ]);
       return NextResponse.json(classes);
     }
+
     if (_id) {
       const classes = await Class.aggregate([
         {
@@ -79,7 +96,6 @@ export const GET = async (req: NextRequest) => {
     });
   }
 };
-
 //delete class
 export const DELETE = async (req: NextRequest) => {
   try {
@@ -101,7 +117,14 @@ export const PUT = async (req: NextRequest) => {
     await conn();
     const body: Partial<IClassValues> & IFetched = await req.json();
     const _id = body._id;
-    //partially validate the body
+    const editClass = await Class.findByIdAndUpdate(
+      _id,
+      {
+        ...body,
+      },
+      { new: true }
+    );
+    return NextResponse.json(editClass);
   } catch (e: any) {
     return errorResponse({
       message: e.message,

@@ -7,14 +7,18 @@ import { Button } from "@/components/ui/button";
 import { useGetUnit } from "@/lib/hooks/useUnit";
 import { Params } from "@/lib/ui_types";
 import { Plus } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { db } from "@/lib/firebase/client";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 const Page = ({ params: { unit: unit_id } }: Params<"unit">) => {
   const { data: unit } = useGetUnit(unit_id);
+
   if (!unit) return <PageLoading />;
+
   return (
     <div>
-      <div className="fb ">
+      <div className="fb">
         <PageTitle link="/units" title={unit?.name} />
         <NewClass />
       </div>

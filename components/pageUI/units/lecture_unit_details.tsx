@@ -17,7 +17,7 @@ const LectureUnitDetails = ({ unit }: { unit: IUnit }) => {
           tabs={[
             {
               title: "Classes",
-              content: <LectureClassesTable />,
+              content: <LectureClassesTable unit={unit._id} />,
             },
             {
               title: "Student",

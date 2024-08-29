@@ -29,6 +29,9 @@ const User = new Schema(
       enum: ["admin", "lecture", "student"],
       default: "student",
     },
+    regNo: {
+      type: String,
+    },
   },
   {
     timestamps: true,

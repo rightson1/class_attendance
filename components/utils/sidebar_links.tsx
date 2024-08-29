@@ -81,3 +81,26 @@ export const sidebar_links_lecture: TSidebarLinks = [
     ],
   },
 ];
+
+export const sidebar_links_student: TSidebarLinks = [
+  {
+    type: "Home",
+    links: [
+      {
+        name: "Dashboard",
+        icon: Home,
+        path: "/student",
+      },
+    ],
+  },
+  {
+    type: "Tables",
+    links: [
+      {
+        name: "Units",
+        icon: MdAcUnit,
+        path: "/student/units",
+      },
+    ],
+  },
+];

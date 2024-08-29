@@ -8,12 +8,15 @@ import { Separator } from "@/components/ui/separator";
 import { MdAcUnit } from "react-icons/md";
 import { PiStudent } from "react-icons/pi";
 import { FaChalkboardTeacher } from "react-icons/fa";
-import ClassesTable from "@/components/shared/TodayClasses";
-import { useGetAdminDashboard } from "@/lib/hooks/useAdmin";
 import { PageLoading } from "@/components/main/loadingUI";
+import { useGetLectureDashboard } from "@/lib/hooks/useLecture";
+import { useAuth } from "@/components/provider/UserAuth";
+import LectureAllClasses from "@/components/pageUI/classes/lecture_all_classes";
+import { useGetStudentDashboard } from "@/lib/hooks/useStudent";
+import { Student_Classes } from "@/components/tables/students/student_classes";
 export default function Home() {
-  const { data: stats, isPending } = useGetAdminDashboard();
-
+  const { user } = useAuth();
+  const { data: stats, isPending } = useGetStudentDashboard(user?._id);
   if (isPending) {
     return <PageLoading />;
   }
@@ -27,20 +30,20 @@ export default function Home() {
         <div className="rp bg-card    grid-1-2-3 gap-3 rounded-lg md:border border-border">
           <div className=" flex flex-col gap-3">
             <Stat_Card
-              title={stats.lecturers}
-              description="Lectures"
-              icon={FaChalkboardTeacher}
+              title={stats.completedClassesToday}
+              description="Classes Completed"
+              icon={PiStudent}
             />
             <Stat_Card
-              title={stats.students}
-              description="Students"
-              icon={PiStudent}
+              title={stats.canceledClasses}
+              description="Cancelled Classes"
+              icon={FaChalkboardTeacher}
             />
           </div>
 
           <Card className="fc flex-col p-4 gap-5 py-5">
             <div className="fc flex-col">
-              <div className="h4">{stats.upcomingClasses}</div>
+              <div className="h4">{stats.upcomingClassesToday}</div>
               <p>Classes Today</p>
             </div>
 
@@ -61,18 +64,18 @@ export default function Home() {
 
           <div className=" flex flex-col gap-3">
             <Stat_Card
-              title={stats.totalUnits}
+              title={stats.studentUnitsCount}
               description="Units"
               icon={MdAcUnit}
             />
             <Stat_Card
-              title={stats.classesToday.length}
+              title={stats.upcomingClassesToday}
               description="Classes Scheduled"
               icon={BookOpenCheck}
             />
           </div>
         </div>
-        <ClassesTable classes={stats.classesToday} />
+        <Student_Classes classes={stats.todaysClasses} />
       </div>
     );
   }

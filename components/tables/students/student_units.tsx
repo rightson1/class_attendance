@@ -1,15 +1,16 @@
 "use client";
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { dummyUnits, IDummyUnit } from "@/lib/data";
 import { Table_Wrapper } from "@/components/shared/table_wrapper";
+import { IUnitWithLecture } from "@/lib/data_types";
+import { useGetStudentUnits } from "@/lib/hooks/useStudent";
+import { useAuth } from "@/components/provider/UserAuth";
 import { useRouter } from "next/navigation";
-import { useGetUnits } from "@/lib/hooks/useUnit";
-import { IUnit, IUnitWithSL } from "@/lib/data_types";
-const UnitTable = () => {
+export const StudentsUnits = () => {
+  const { user } = useAuth();
+  const { data: units, isPending } = useGetStudentUnits(user?._id);
   const router = useRouter();
-  const { data: units, isLoading } = useGetUnits();
-  const columns: ColumnDef<IUnitWithSL>[] = [
+  const columns: ColumnDef<IUnitWithLecture>[] = [
     {
       accessorKey: "name",
       header: "Title",
@@ -46,15 +47,13 @@ const UnitTable = () => {
     <div className="bg-card">
       <Table_Wrapper
         columns={columns}
-        onRowClick={(row) => {
-          router.push(`/admin/units/${row._id}`);
-        }}
         data={units || []}
-        loading={isLoading}
+        loading={isPending}
         searchField="name"
+        onRowClick={(row) => {
+          router.push(`/student/units/${row._id}`);
+        }}
       />
     </div>
   );
 };
-
-export default UnitTable;

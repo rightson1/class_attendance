@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import Sidebar from "./Sidebar";
+import { useAuth } from "../provider/UserAuth";
 export const SideDrawer = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
   const pathname = usePathname();
   useEffect(() => {
     setOpen(false);
@@ -18,7 +20,15 @@ export const SideDrawer = () => {
         <Menu />
       </SheetTrigger>
       <SheetContent side={"left"} className="p-0 w-[250px] " overlay={false}>
-        <Sidebar lecture="admin" />
+        <Sidebar
+          user_type={
+            user?.role === "admin"
+              ? "admin"
+              : user?.role === "student"
+              ? "student"
+              : "lecture"
+          }
+        />
       </SheetContent>
     </Sheet>
   );

@@ -3,10 +3,18 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { sidebar_links, sidebar_links_lecture } from "../utils/sidebar_links";
+import {
+  sidebar_links,
+  sidebar_links_lecture,
+  sidebar_links_student,
+} from "../utils/sidebar_links";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-const Sidebar = ({ lecture = "admin" }: { lecture: "lecture" | "admin" }) => {
+const Sidebar = ({
+  user_type = "admin",
+}: {
+  user_type: "lecture" | "admin" | "student";
+}) => {
   const pathname = usePathname();
   const [isActive, setIsActive] = React.useState(pathname);
   const [activeLink, setActiveLink] = React.useState("/");
@@ -14,7 +22,12 @@ const Sidebar = ({ lecture = "admin" }: { lecture: "lecture" | "admin" }) => {
     setIsActive(pathname);
     setActiveLink(pathname.split("/")[1]);
   }, [pathname]);
-  const links = lecture === "lecture" ? sidebar_links_lecture : sidebar_links;
+  const links =
+    user_type === "lecture"
+      ? sidebar_links_lecture
+      : user_type === "admin"
+      ? sidebar_links
+      : sidebar_links_student;
   const LinkBtn = ({
     index,
     link,

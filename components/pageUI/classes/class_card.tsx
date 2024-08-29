@@ -16,6 +16,8 @@ import { IClassWithUnit } from "@/lib/data_types";
 import { MdFlightClass } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
 import { FaHourglassEnd, FaHourglassStart } from "react-icons/fa";
+import { useEditClass } from "@/lib/hooks/useClass";
+import { useCustomToast } from "@/components/atoms/functions";
 const FB = ({
   children,
   className,
@@ -25,6 +27,7 @@ const FB = ({
 }) => (
   <div className={cn("fb w-full py-2 items-center", className)}>{children}</div>
 );
+
 const Title = (props: {
   title: string;
   icon?: TIcon;
@@ -66,6 +69,8 @@ export const Class_Card = ({
 }: {
   currentClass: IClassWithUnit;
 }) => {
+  const { mutateAsync: editClass } = useEditClass();
+  const { customToast, modalOpen, setModalOpen } = useCustomToast();
   return (
     <div
       className=" bg-card px-4 py-5  h-min w-full
@@ -114,7 +119,21 @@ export const Class_Card = ({
       />
 
       <Separator />
-      <Button variant={"ghost"} className="fc gap-2 text-destructive my-4">
+      <Button
+        disabled={!(currentClass.status === "upcoming")}
+        variant={"ghost"}
+        onClick={() => {
+          customToast({
+            func: async () => {
+              await editClass({
+                status: "cancelled",
+                _id: currentClass._id,
+              });
+            },
+          });
+        }}
+        className="fc gap-2 text-destructive my-4"
+      >
         <GrHide size={16} />
         <span>Cancel Class</span>
       </Button>

@@ -26,6 +26,7 @@ export const classSchema = z
       const endDateTime = new Date(
         `${data.class_date.toISOString().split("T")[0]}T${data.end_time}`
       );
+
       return startDateTime < endDateTime;
     },
     {
