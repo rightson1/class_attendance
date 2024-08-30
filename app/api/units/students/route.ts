@@ -4,7 +4,7 @@ import Unit from "@/database/Unit";
 import { IUnitStudentUpdate } from "@/lib/data_types";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   const unit_id = req.nextUrl.searchParams.get("id");
   if (!unit_id) {

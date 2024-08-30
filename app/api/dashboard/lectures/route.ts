@@ -5,7 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { startOfDay, endOfDay } from "date-fns";
 import conn from "@/database/conn";
 import { errorResponse } from "@/app/lib/functions";
-
+import { Types } from "mongoose";
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   try {
     await conn();
@@ -49,7 +50,7 @@ export const GET = async (req: NextRequest) => {
 
     // Number of students in all the units the lecturer teaches
     const studentsCount = await Unit.aggregate([
-      { $match: { lecturer: lecture_id } },
+      { $match: { lecturer: new Types.ObjectId(lecture_id) } },
       {
         $lookup: {
           from: "users",
@@ -93,7 +94,6 @@ export const GET = async (req: NextRequest) => {
       },
       { $unwind: "$unitDetails" },
     ]);
-
     return NextResponse.json({
       lectureClassesToday,
       ongoingClasses,

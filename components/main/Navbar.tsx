@@ -44,9 +44,7 @@ const Navbar = () => {
 const NavRightSide = () => {
   return (
     <div className="fbc gap-2">
-      <div className="fbc">
-        <NotificationsDrawer />
-      </div>
+      <div className="fbc">{/* <NotificationsDrawer /> */}</div>
       <UserSettings />
     </div>
   );

@@ -6,7 +6,7 @@ export const useCreateAdmin = () => {
   return useMutation({
     mutationKey: ["Create_Admin"],
     mutationFn: async (values: IAdminValues) => {
-      return axios.post("/api/user", values);
+      return axios.post("/api/users", values);
     },
   });
 };

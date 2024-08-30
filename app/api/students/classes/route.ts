@@ -3,7 +3,7 @@ import conn from "@/database/conn";
 import Unit from "@/database/Unit";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   const student_id = req.nextUrl.searchParams.get("student_id");
   if (!student_id) {

@@ -5,7 +5,7 @@ import { IFetched } from "@/lib/data_types";
 import { classSchema, IClassValues } from "@/lib/zod";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export const POST = async (req: NextRequest) => {
   try {
     await conn();

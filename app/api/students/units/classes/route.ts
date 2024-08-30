@@ -6,7 +6,7 @@ import User from "@/database/User";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import { all } from "axios";
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   try {
     const unit_id = req.nextUrl.searchParams.get("unit_id");

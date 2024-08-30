@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { startOfDay, endOfDay } from "date-fns";
 import conn from "@/database/conn";
 import { errorResponse } from "@/app/lib/functions";
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   try {
     await conn();
@@ -21,16 +21,14 @@ export const GET = async (req: NextRequest) => {
     });
 
     const ongoingClassCount = await Class.countDocuments({
-      class_date: today,
-      start_time: { $lte: today.getHours() },
-      end_time: { $gte: today.getHours() },
+      status: "active",
     });
 
     const startOfToday = startOfDay(today);
     const endOfToday = endOfDay(today);
     const completedClassCountToday = await Class.countDocuments({
       class_date: { $gte: startOfToday, $lte: endOfToday },
-      end_time: { $lt: today.getHours() },
+      status: "ended",
     });
 
     const unitCount = await Unit.countDocuments();

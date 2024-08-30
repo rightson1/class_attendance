@@ -3,7 +3,7 @@ import conn from "@/database/conn";
 import { IAdminValues } from "@/lib/data_types";
 import { auth_admin } from "@/lib/firebase/server";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export const POST = async (req: NextRequest) => {
   const body: IAdminValues = await req.json();
   try {

@@ -59,7 +59,7 @@ const Register = () => {
         });
       },
       sfunc: async () => {
-        router.push("/auth/admin/login");
+        router.push("/auth/login");
       },
     });
   };
@@ -106,7 +106,7 @@ const Register = () => {
         <CardFooter className="flex justify-between">
           <span>
             Already have an account?
-            <Link href="/auth/admin/login" className="text-primary mx-2">
+            <Link href="/auth/login" className="text-primary mx-2">
               Login
             </Link>
           </span>

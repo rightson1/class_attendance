@@ -2,7 +2,7 @@ import { eRes, errorResponse } from "@/app/lib/functions";
 import conn from "@/database/conn";
 import Unit from "@/database/Unit";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   try {
     await conn();

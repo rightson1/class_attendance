@@ -6,7 +6,7 @@ import { startOfDay, endOfDay } from "date-fns";
 import conn from "@/database/conn";
 import { errorResponse } from "@/app/lib/functions";
 import { Types } from "mongoose";
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   try {
     await conn();
@@ -39,17 +39,13 @@ export const GET = async (req: NextRequest) => {
 
     // Number of ongoing classes for the student
     const ongoingClasses = await Class.countDocuments({
-      students: student_id,
-      class_date: today,
-      start_time: { $lte: today.getHours() },
-      end_time: { $gte: today.getHours() },
+      status: "active",
     });
 
     // Number of completed classes for today for the student
     const completedClassesToday = await Class.countDocuments({
       students: student_id,
       class_date: { $gte: startOfToday, $lte: endOfToday },
-      end_time: { $lt: today.getHours() },
     });
 
     // Number of units the student is enrolled in
@@ -61,7 +57,6 @@ export const GET = async (req: NextRequest) => {
     const upcomingClassesToday = await Class.countDocuments({
       students: student_id,
       class_date: { $gte: startOfToday, $lte: endOfToday },
-      start_time: { $gt: today.getHours() },
     });
 
     // Number of canceled classes for the student
